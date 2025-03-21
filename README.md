@@ -5,12 +5,9 @@ A simple tool to sync local files with an HPC server using rsync.
 ## Installation
 
 1. Clone this repository
-2. Install dependencies using uv:
+2. Install the package and its dependencies:
    ```bash
-   uv pip install -r requirements.txt
-   ```
-3. Install the package in development mode:
-   ```bash
+   uv sync
    uv pip install -e .
    ```
 
