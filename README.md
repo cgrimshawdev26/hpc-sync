@@ -13,7 +13,7 @@ A simple tool to sync local files with an HPC server using rsync.
 
 ## Configuration
 
-The tool uses a YAML configuration file located at `hpc_sync/conf/config.yaml`. You can override the default configuration by:
+The tool uses a YAML configuration file located at `hpc-sync/conf/config.yaml`. You can override the default configuration by:
 
 1. Editing the default config file
 2. Creating a new config file and using it with `--config-path`
