@@ -22,27 +22,6 @@ The tool uses a YAML configuration file located at `hpc_sync/conf/config.yaml`. 
 2. Creating a new config file and using it with `--config-path`
 3. Overriding specific values via command line: `hpc-sync hpc.host=my.hpc.server`
 
-Default configuration:
-```yaml
-hpc:
-  host: "your.hpc.server"  # HPC server hostname
-  user: "${oc.env:USER}"   # Default to current user
-  port: 22                 # SSH port
-
-sync:
-  source_dir: "${hydra:runtime.cwd}"  # Current working directory
-  target_dir: "~/projects/${hydra:runtime.cwd:name}"  # Remote directory
-  exclude:
-    - ".git/"
-    - "__pycache__/"
-    # ... (see config.yaml for full list)
-  options:
-    - "--archive"
-    - "--compress"
-    - "--verbose"
-    - "--delete"
-```
-
 ## Usage
 
 Basic usage:
