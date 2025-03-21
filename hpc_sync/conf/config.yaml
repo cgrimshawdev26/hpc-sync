@@ -1,0 +1,30 @@
+defaults:
+  - _self_
+
+# HPC connection settings
+hpc:
+  host: "your.hpc.server"  # HPC server hostname
+  user: "${oc.env:USER}"   # Default to current user, can be overridden
+  port: 22                 # SSH port
+
+# Sync settings
+sync:
+  source_dir: "${hydra:runtime.cwd}"  # Current working directory
+  target_dir: "~/mnt/parscratch/users/acp23crg/${hydra:runtime.cwd:name}"  # Remote directory
+  exclude:
+    - ".git/"
+    - "__pycache__/"
+    - "*.pyc"
+    - ".env"
+    - "venv/"
+    - ".pytest_cache/"
+    - ".coverage"
+    - ".ruff_cache/"
+    - "*.egg-info/"
+  
+  # Additional rsync options
+  options:
+    - "--archive"      # Preserve permissions, timestamps, etc.
+    - "--compress"     # Compress data during transfer
+    - "--verbose"      # Show detailed progress
+    - "--delete"       # Delete files in target that don't exist in source 

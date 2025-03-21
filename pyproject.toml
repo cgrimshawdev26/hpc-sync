@@ -1,0 +1,13 @@
+[project]
+name = "hpc-sync"
+version = "0.1.0"
+description = "A tool to sync local files with HPC server using rsync"
+authors = ["Charlie Grimshaw <cgrimshaw1@sheffield.ac.uk>"]
+dependencies = [
+    "hydra-core>=1.3.2",
+    "mypy>=1.15.0",
+    "rich>=13.9.4",
+]
+
+[project.scripts]
+hpc-sync = "hpc_sync.cli:main"
