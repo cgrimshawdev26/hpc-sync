@@ -8,7 +8,7 @@ A simple tool to sync local files with an HPC server using rsync.
 2. Install the package and its dependencies:
    ```bash
    uv sync
-   uv pip install -e .
+   uv tool install .
    ```
 
 ## Configuration
@@ -41,6 +41,5 @@ The tool will:
 
 ## Requirements
 
-- Python 3.9+
 - rsync installed on local machine
-- SSH access to HPC server
+- SSH access to server

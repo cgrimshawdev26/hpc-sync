@@ -37,6 +37,9 @@ class HPCSync:
         for pattern in self.exclude:
             cmd.extend(["--exclude", pattern])
         
+        # Ensure .git is always excluded
+        cmd.extend(["--exclude", ".git", "--exclude", ".git/**"])
+        
         # Add SSH options
         cmd.extend(["-e", f"ssh -p {self.port}"])
         
@@ -44,6 +47,9 @@ class HPCSync:
         source = str(self.source_dir) + "/"  # Trailing slash to sync contents
         destination = f"{self.user}@{self.host}:{self.target_dir}"
         cmd.extend([source, destination])
+        
+        # Print the command for debugging
+        console.print(f"[dim]Running command: {' '.join(cmd)}[/dim]")
         
         return cmd
 
