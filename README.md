@@ -1,6 +1,6 @@
 # HPC Sync
 
-A simple tool to sync local files with an HPC server using rsync.
+A simple tool to sync files between local machine and HPC server using rsync.
 
 ## Installation
 
@@ -23,8 +23,11 @@ The tool uses a YAML configuration file located at `hpc-sync/conf/config.yaml`. 
 
 Basic usage:
 ```bash
-# Sync current directory using default configuration
+# Push current directory to HPC using default configuration
 hpc-sync
+
+# Pull from HPC to local machine
+hpc-sync pull=true
 
 # Override HPC host
 hpc-sync hpc.host=my.cluster.edu
@@ -36,7 +39,7 @@ hpc-sync sync.target_dir=~/my/custom/path
 The tool will:
 1. Read the configuration
 2. Build the rsync command with appropriate options
-3. Execute the sync operation
+3. Execute the sync operation (push to HPC by default, pull if specified)
 4. Show progress and any warnings/errors
 
 ## Requirements

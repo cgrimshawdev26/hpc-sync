@@ -26,8 +26,12 @@ class HPCSync:
         self.exclude = exclude
         self.options = options
 
-    def build_rsync_command(self) -> List[str]:
-        """Build the rsync command with all options."""
+    def build_rsync_command(self, pull: bool = False) -> List[str]:
+        """Build the rsync command with all options.
+        
+        Args:
+            pull: If True, pull from remote to local. If False, push from local to remote.
+        """
         cmd = ["rsync"]
         
         # Add standard options
@@ -43,9 +47,14 @@ class HPCSync:
         # Add SSH options
         cmd.extend(["-e", f"ssh -p {self.port}"])
         
-        # Add source and destination
-        source = str(self.source_dir) + "/"  # Trailing slash to sync contents
-        destination = f"{self.user}@{self.host}:{self.target_dir}"
+        # Add source and destination based on direction
+        if pull:
+            source = f"{self.user}@{self.host}:{self.target_dir}/"
+            destination = str(self.source_dir)
+        else:
+            source = str(self.source_dir) + "/"  # Trailing slash to sync contents
+            destination = f"{self.user}@{self.host}:{self.target_dir}"
+            
         cmd.extend([source, destination])
         
         # Print the command for debugging
@@ -53,15 +62,26 @@ class HPCSync:
         
         return cmd
 
-    def sync(self) -> bool:
-        """Execute the sync operation."""
-        cmd = self.build_rsync_command()
+    def sync(self, pull: bool = False) -> bool:
+        """Execute the sync operation.
+        
+        Args:
+            pull: If True, pull from remote to local. If False, push from local to remote.
+        """
+        cmd = self.build_rsync_command(pull=pull)
+        
+        if pull:
+            from_path = f"{self.user}@{self.host}:{self.target_dir}"
+            to_path = str(self.source_dir)
+        else:
+            from_path = str(self.source_dir)
+            to_path = f"{self.user}@{self.host}:{self.target_dir}"
         
         console.print(
             Panel(
-                f"[bold blue]Syncing[/bold blue]\n"
-                f"From: [green]{self.source_dir}[/green]\n"
-                f"To: [green]{self.user}@{self.host}:{self.target_dir}[/green]"
+                f"[bold blue]{'Pulling' if pull else 'Pushing'}[/bold blue]\n"
+                f"From: [green]{from_path}[/green]\n"
+                f"To: [green]{to_path}[/green]"
             )
         )
         
